@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
+import com.github.smk7758.VideoCommunicater.Capture;
+import com.github.smk7758.VideoCommunicater.Main;
 import com.github.smk7758.VideoCommunicater.Screens.MainController;
 
 public class Server extends Thread implements Closeable {
@@ -17,15 +19,15 @@ public class Server extends Thread implements Closeable {
 	MainController mctr = null;
 	Send send = null;
 	Receive receive = null;
+	Capture capture = null;
 
-	public Server(short port, MainController mctr) {
+	public Server(short port) {
 		this.setDaemon(true);
 		this.port = port;
-		this.mctr = mctr;
 		try {
 			server_socket = new ServerSocket(port);
 		} catch (BindException e) {
-			System.err.println(e.getMessage());
+			System.err.println(e.getMessage() + System.lineSeparator());
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -35,13 +37,18 @@ public class Server extends Thread implements Closeable {
 	@Override
 	public void run() {
 		try {
-			if (server_socket == null || server_socket.isClosed() || server_socket.isBound()) return;
+			System.out.println("start run in Server");
+			if (server_socket == null) return;
+			System.out.println("before accept");
 			socket = server_socket.accept();
+			System.out.println("after accept");
 			accepted = true;
 			System.out.println("Adress from: " + socket.getInetAddress());
-			send = new Send(socket.getOutputStream(), mctr);
+			send = new Send(socket.getOutputStream());
+			capture = new Capture(Main.camera_number, send);
+			receive = new Receive(socket.getInputStream());
 			send.start();
-			receive = new Receive(socket.getInputStream(), mctr);
+			capture.start();
 			receive.start();
 		} catch (SocketException ex) {
 			System.err.println("Server socket Closed.");

@@ -18,9 +18,9 @@ public class Main extends Application {
 	public static final String fxml_url = "Screens/Main.fxml";
 	public static Stage primary_stage = null; // why?
 	public static boolean debug_mode = false; // for Debug.
-	private static MainController mctr = null;
+	public static MainController mctr = null;
 	public static short port = 25565; // TODO: 設定ファイル
-	public static int camera_number = 1;
+	public static int camera_number = 0;
 	public static Server server = null;
 	public static Client client = null;
 
@@ -33,19 +33,19 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primary_stage) throws Exception {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml_url));
-			mctr = (MainController) loader.getController();
+			// mctr = (MainController) loader.getController(); // 上手くいかなかった。
 			Scene scene = new Scene(loader.load());
 			// Set Title
-			primaryStage.setTitle(program_name);
+			primary_stage.setTitle(program_name);
 			// Set Window
-			primaryStage.setResizable(false);
+			primary_stage.setResizable(false);
 			// Set Scene
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			server = new Server(port, mctr);
+			primary_stage.setScene(scene);
+			primary_stage.show();
+			server = new Server(port);
 			server.start();
 		} catch (IOException e) {
 			e.printStackTrace();

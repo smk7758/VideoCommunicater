@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -29,5 +30,6 @@
       <ImageView fx:id="image_view_sub" fitHeight="165.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
       <TextField fx:id="textfield_address" promptText="address" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <TextField fx:id="textfield_port" promptText="port" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+      <TextArea fx:id="textarea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
    </children>
 </GridPane>

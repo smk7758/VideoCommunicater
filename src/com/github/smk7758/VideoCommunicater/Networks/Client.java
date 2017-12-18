@@ -5,16 +5,16 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
-import com.github.smk7758.VideoCommunicater.Screens.MainController;
+import com.github.smk7758.VideoCommunicater.Capture;
+import com.github.smk7758.VideoCommunicater.Main;
 
 public class Client extends Thread implements Closeable {
 	Socket socket = null;
-	MainController mctr = null;
 	Send send = null;
 	Receive receive = null;
+	Capture capture = null;
 
-	public Client(InetSocketAddress host, MainController mctr) {
-		this.mctr = mctr;
+	public Client(InetSocketAddress host) {
 		try {
 			socket = new Socket(host.getHostName(), host.getPort());
 		} catch (IOException e) {
@@ -26,9 +26,13 @@ public class Client extends Thread implements Closeable {
 	@Override
 	public void run() {
 		try {
-			send = new Send(socket.getOutputStream(), mctr);
+			System.out.println("start run in Client");
+			System.out.println("Connect: " + socket.getInetAddress());
+			send = new Send(socket.getOutputStream());
+			capture = new Capture(Main.camera_number, send);
+			receive = new Receive(socket.getInputStream());
 			send.start();
-			receive = new Receive(socket.getInputStream(), mctr);
+			capture.start();
 			receive.start();
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック

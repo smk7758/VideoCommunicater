@@ -1,23 +1,33 @@
 package com.github.smk7758.VideoCommunicater.Screens;
 
+import java.io.ByteArrayInputStream;
 import java.net.InetSocketAddress;
 
+import com.github.smk7758.VideoCommunicater.ImageSettable;
 import com.github.smk7758.VideoCommunicater.Main;
 import com.github.smk7758.VideoCommunicater.Networks.Client;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class MainController {
+public class MainController implements ImageSettable {
 	private boolean is_client = false;
 	@FXML
-	Button button_start, button_stop;
+	private Button button_start, button_stop;
 	@FXML
-	TextField textfield_address, textfield_port; // TODO
+	private TextField textfield_address, textfield_port; // TODO
 	@FXML
-	public ImageView image_view_main, image_view_sub;
+	private ImageView image_view_main, image_view_sub;
+	@FXML
+	private TextArea textarea;
+
+	public void initialize() {
+		Main.mctr = this;
+	}
 
 	@FXML
 	private void onButtonStart() {
@@ -32,7 +42,7 @@ public class MainController {
 			System.err.println("Bad port number.");
 		}
 		InetSocketAddress host = new InetSocketAddress(address, port);
-		Main.client = new Client(host, this);
+		Main.client = new Client(host);
 		Main.client.start();
 		is_client = true;
 	}
@@ -42,5 +52,18 @@ public class MainController {
 		if (is_client) Main.client.close();
 		else Main.server.close();
 		System.exit(0);
+	}
+
+	@Override
+	public void setImage(byte[] image) {
+		image_view_sub.setImage(new Image(new ByteArrayInputStream(image)));
+	}
+
+	public void setMainImage(byte[] image) {
+		image_view_main.setImage(new Image(new ByteArrayInputStream(image)));
+	}
+
+	public void addText(String text) {
+		textarea.appendText(text);
 	}
 }
