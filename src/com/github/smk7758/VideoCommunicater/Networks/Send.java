@@ -13,7 +13,6 @@ public class Send extends Thread implements Closeable, ImageSettable {
 	DataOutputStream dos = null;
 	byte[] byte_array = null;
 	boolean is_alive = true;
-	// boolean is_send = false;
 
 	public Send(OutputStream os) {
 		this.setDaemon(true);
@@ -24,11 +23,14 @@ public class Send extends Thread implements Closeable, ImageSettable {
 	@Override
 	public void run() {
 		while (is_alive) {
-			// if (is_send) {
 			sendCameraData(this.byte_array);
-			// is_send = false;
-			// System.out.print("is_send");
-			// }
+			System.out.print("+");
+			try {
+				sleep(1);
+			} catch (InterruptedException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -45,15 +47,18 @@ public class Send extends Thread implements Closeable, ImageSettable {
 		// is_send = true;
 		this.byte_array = byte_array;
 		Main.mctr.setImage(byte_array);
+		// System.out.print(",");
 	}
 
 	private void sendCameraData(byte[] byte_array) {
 		try {
-			if (byte_array == null) System.out.println("byte is null in send.");
-			if (dos == null || byte_array == null) return;
-			System.out.println("seCD@Send.");
+			// if (byte_array == null) System.out.println("byte array are null in send.");
+			if (dos == null || byte_array == null)
+				return;
+			// if (Main.client == null) return;
+			// System.out.print(byte_array.length);
 			// dos.writeInt(byte_array.length);
-			dos.writeBytes(byte_array.toString() + "\n");
+			dos.write(byte_array);
 			dos.flush();
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック

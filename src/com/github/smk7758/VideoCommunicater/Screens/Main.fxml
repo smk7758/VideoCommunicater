@@ -31,5 +31,6 @@
       <TextField fx:id="textfield_address" promptText="address" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <TextField fx:id="textfield_port" promptText="port" GridPane.columnIndex="5" GridPane.rowIndex="3" />
       <TextArea fx:id="textarea" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+      <TextField fx:id="textfield_cam" promptText="Cam" GridPane.columnIndex="4" GridPane.rowIndex="2" />
    </children>
 </GridPane>

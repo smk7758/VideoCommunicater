@@ -19,7 +19,7 @@ public class MainController implements ImageSettable {
 	@FXML
 	private Button button_start, button_stop;
 	@FXML
-	private TextField textfield_address, textfield_port; // TODO
+	private TextField textfield_address, textfield_port, textfield_cam; // TODO
 	@FXML
 	private ImageView image_view_main, image_view_sub;
 	@FXML
@@ -65,5 +65,14 @@ public class MainController implements ImageSettable {
 
 	public void addText(String text) {
 		textarea.appendText(text);
+	}
+
+	public int getCam() {
+		return Integer.parseInt(textfield_cam.getText());
+	}
+
+	public boolean isCamEmpty() {
+		if (textfield_cam == null || textfield_cam.getText() == null || textfield_cam.getText().isEmpty()) return false;
+		else return true;
 	}
 }
