@@ -32,7 +32,8 @@ public class Capture extends Thread implements Closeable {
 				// mat → image
 				byte_mat = new MatOfByte();
 				Imgcodecs.imencode(".bmp", mat, byte_mat);
-				if (byte_mat != null) imageset.setImage(byte_mat.toArray());
+				// if (byte_mat != null)
+				imageset.setImage(byte_mat.toArray());
 			} else {
 				System.err.println("[Error] Can't capture the camera.");
 			}

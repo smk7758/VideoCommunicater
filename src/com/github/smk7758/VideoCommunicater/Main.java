@@ -20,7 +20,7 @@ public class Main extends Application {
 	public static boolean debug_mode = false; // for Debug.
 	public static MainController mctr = null;
 	public static short port = 25565; // TODO: 設定ファイル
-	public static int camera_number = 1;
+	public static int camera_number = 0;
 	public static Server server = null;
 	public static Client client = null;
 
